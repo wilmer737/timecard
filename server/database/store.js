@@ -1,8 +1,10 @@
 const knex = require('knex') (require('./knexfile'))
 
-const addEntry = () => {
-  console.log('Adding Entry')
-  return Promise.resolve()
+const addEntry = ({start_time, end_time}) => {
+  return knex('entries').insert({
+    start_time,
+    end_time
+  })
 }
 
 module.exports = {addEntry}

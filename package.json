@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/server.js"
   },
   "keywords": [],
   "author": "Wilmer",
@@ -13,6 +13,7 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "knex": "^0.13.0",
-    "mysql": "^2.13.0"
+    "mysql": "^2.13.0",
+    "semantic-ui": "^2.2.10"
   }
 }

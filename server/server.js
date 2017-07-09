@@ -9,7 +9,11 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.post('/new-entry', (req,res) => {
-  store.addEntry().then(() => res.sendStatus(200))
+  console.log(req.body)
+  store.addEntry({
+    start_time: req.body.startTime,
+    end_time: req.body.endTime
+  }).then(() => res.sendStatus(200))
 })
 
 app.listen(3000, () => {

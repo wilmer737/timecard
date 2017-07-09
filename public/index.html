@@ -3,17 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Timecard App</title>
+
+
+    <link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="semantic/semantic.min.js"></script>
 </head>
 <body>
-    <form class="new-entry">
-        <label for="start_time">Start Time</label>
-        <input type="time" id="start_time" placeholder="start time">
+    <div class="ui raised very padded text container segment">
+        <form class="new-entry ui form">
+            <div class="field">
+                <label for="start-date">Start Time</label>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="date" id="start-date" value="3023-02-23">
+                    </div>
+                    <div class="field">
+                        <input type="time" id="start-time">
+                    </div>
+                </div>
+            </div>
 
-        <label for="end_time">End Time</label>
-        <input type="time" id="end_time" placeholder="end time">
-
-        <input type="submit" value="Create Entry">
-    </form>
+            <div class="field">
+                <label for="end-date">End Time</label>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="date" id="end-date" value="3023-02-23">
+                    </div>
+                    <div class="field">
+                        <input type="time" id="end-time">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="ui negative button">Submit</button>
+        </form>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
