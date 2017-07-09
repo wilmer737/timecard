@@ -4,7 +4,15 @@ const bodyParser = require('body-parser')
 const store = require('./database/store')
 
 const app = express()
+const port = process.env.PORT || 3000
 
+app.use((req,res,next) => {
+  if (req.headers['x-forwarded-proto'] === 'https') {
+    res.redirect(`http://${req.hostname}${req.url}`)
+  } else {
+    next()
+  }
+})
 app.use(bodyParser.json())
 app.use(express.static('public'))
 
@@ -16,6 +24,6 @@ app.post('/new-entry', (req,res) => {
   }).then(() => res.sendStatus(200))
 })
 
-app.listen(3000, () => {
-  console.log(`Listening at http://localhost:3000`)
+app.listen(port, () => {
+  console.log(`Listening at http://localhost:${port}`)
 })
