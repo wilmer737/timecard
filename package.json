@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "build": "webpack",
+    "watch": "webpack -w"
   },
   "keywords": [],
   "author": "Wilmer",
