@@ -13,6 +13,7 @@ app.use((req,res,next) => {
     next()
   }
 })
+
 app.use(bodyParser.json())
 app.use(express.static('public'))
 
@@ -20,9 +21,15 @@ app.post('/new-entry', (req,res) => {
   console.log(req.body)
   store.addEntry({
     start_time: req.body.startTime,
-    end_time: req.body.endTime
+    end_time: req.body.endTime,
+    hours_worked: req.body.hoursWorked
   }).then(() => res.sendStatus(200))
 })
+
+/* todo: set up server side rendering
+app.get('*', (req,res) => {
+
+})*/
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)

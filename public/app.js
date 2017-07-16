@@ -10,6 +10,8 @@ form.addEventListener('submit', e => {
   const endDate = form.querySelector('#end-date').value
   const endTime = form.querySelector('#end-time').value
   data.endTime = new Date(`${endDate} ${endTime}`).toISOString().slice(0,19).replace('T', ' ')
+
+  data.hoursWorked = 1
   console.log(data)
   post('/new-entry', data)
 

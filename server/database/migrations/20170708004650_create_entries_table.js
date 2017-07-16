@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     t.increments('id').primary()
     t.dateTime('start_time').notNullable()
     t.dateTime('end_time').notNullable()
+    t.float('hours_worked', 2).notNullable()
     t.timestamps(false, true)
   })
 };
