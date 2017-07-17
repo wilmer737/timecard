@@ -1,5 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const favicon = require('express-favicon')
+const path = require('path')
 
 const store = require('./database/store')
 
@@ -14,6 +16,7 @@ app.use((req,res,next) => {
   }
 })
 
+app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')))
 app.use(bodyParser.json())
 app.use(express.static('public'))
 

@@ -3,7 +3,8 @@ import {
   Button,
   Container,
   Segment,
-  Form
+  Form,
+  Message
 } from 'semantic-ui-react'
 import moment from 'moment'
 
@@ -19,38 +20,91 @@ class NewTimeForm extends React.Component {
       endDate: todayFormatted,
       endTime: '',
       hoursWorked: '',
-      today: todayFormatted
+      today: todayFormatted,
+      error: false,
+      errorMessage: ''
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
-
+  validateForm() {
+    if (moment(`${this.state.endDate} ${this.state.endTime}`).isBefore(`${this.state.startDate} ${this.state.startTime}`)) {
+      throw new Error('Start Date has to be before End Date')
+    }
 
   }
 
+  timeToDecimal(t) {
+    const arr = t.split(':');
+    return parseFloat(parseInt(arr[0], 10) + '.' + parseInt((arr[1]/6)*10, 10));
+  }
+
+  calculateHours(startDateTime, endDateTime) {
+    const startTime = moment(startDateTime)
+    const endTime = moment(endDateTime)
+
+    const duration = moment.duration(endTime.diff(startTime))
+    const hours = parseInt(duration.asHours());
+    const minutes = parseInt(duration.asMinutes()) - hours * 60
+
+    return this.timeToDecimal(`${hours}:${minutes}`)
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+
+    const startDateTime = `${this.state.startDate} ${this.state.startTime}`
+    const endDateTime = `${this.state.endDate} ${this.state.endTime}`
+
+    const data = {}
+    try {
+      this.validateForm()
+      data.startTime = new Date(startDateTime).toISOString().slice(0,19).replace('T', ' ')
+      data.endTime = new Date(endDateTime).toISOString().slice(0,19).replace('T', ' ')
+      data.hoursWorked = this.calculateHours(startDateTime, endDateTime)
+    } catch (err) {
+      this.setState({error:true, errorMessage: err.message})
+    }
+
+    return window.fetch('/new-entry', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+  }
+
   handleChange(e) {
-    console.log("This", this, "E", e.target, e.target.value)
+    const {name, value} = e.target
+    const data = {[name]: value, error: false}
+
+    this.setState(data)
   }
 
   render() {
     return(
       <Container text>
         <Segment raised padded='very'>
-          <Form onSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handleSubmit} error={this.state.error}>
             <Form.Field>
               <label>Start Time</label>
-              <input type="date" className="start-date" defaultValue={this.state.today} onChange={this.handleChange} required/>
-              <input type="time" className="start-time" onChange={this.handleChange} required />
+              <input type="date" name="startDate" defaultValue={this.state.today} onChange={this.handleChange} required/>
+              <input type="time" name="startTime" onChange={this.handleChange} required />
             </Form.Field>
             <Form.Field>
               <label>End Time</label>
-              <input type="date" className="end-date" defaultValue={this.state.today} onChange={this.handleChange} required />
-              <input type="time" className="end-time" onChange={this.handleChange} required />
+              <input type="date" name="endDate" defaultValue={this.state.today} onChange={this.handleChange} required />
+              <input type="time" name="endTime" onChange={this.handleChange} required />
             </Form.Field>
+            <Message
+              error
+              header='Error'
+              content='Start Date has to be before End Date'
+            />
             <Button color="teal" floated="right">Submit</Button>
           </Form>
         </Segment>
