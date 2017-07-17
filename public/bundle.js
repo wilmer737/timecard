@@ -56808,14 +56808,22 @@ var App = function (_React$Component) {
           'div',
           null,
           _react2.default.createElement(
-            _reactRouterDom.Link,
-            { to: '/' },
-            'Home Page'
+            'div',
+            null,
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: '/' },
+              'Home Page'
+            )
           ),
           _react2.default.createElement(
-            _reactRouterDom.Link,
-            { to: '/log-time' },
-            'New Time'
+            'div',
+            null,
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: '/log-time' },
+              'New Time'
+            )
           ),
           _react2.default.createElement('hr', null),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _home2.default }),
@@ -78652,6 +78660,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var NewTimeForm = function (_React$Component) {
   _inherits(NewTimeForm, _React$Component);
 
+  /**
+   * Constructor
+   * @param props
+   */
   function NewTimeForm(props) {
     _classCallCheck(this, NewTimeForm);
 
@@ -78676,6 +78688,11 @@ var NewTimeForm = function (_React$Component) {
     return _this;
   }
 
+  /**
+   * Validates form
+   */
+
+
   _createClass(NewTimeForm, [{
     key: 'validateForm',
     value: function validateForm() {
@@ -78683,6 +78700,13 @@ var NewTimeForm = function (_React$Component) {
         throw new Error('Start Date has to be before End Date');
       }
     }
+
+    /**
+     * Converts string representing HH:mm to decimal and returns the value
+     * @param t
+     * @returns {Number}
+     */
+
   }, {
     key: 'timeToDecimal',
     value: function timeToDecimal(t) {
@@ -78701,6 +78725,14 @@ var NewTimeForm = function (_React$Component) {
 
       return this.timeToDecimal(hours + ':' + minutes);
     }
+
+    /**
+     * Submits the data of the form
+     *
+     * @param e
+     * @returns {*}
+     */
+
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
@@ -78728,6 +78760,13 @@ var NewTimeForm = function (_React$Component) {
         body: JSON.stringify(data)
       });
     }
+
+    /**
+     * Handles change
+     *
+     * @param e
+     */
+
   }, {
     key: 'handleChange',
     value: function handleChange(e) {
@@ -78741,6 +78780,12 @@ var NewTimeForm = function (_React$Component) {
 
       this.setState(data);
     }
+
+    /**
+     * Renders component
+     * @returns
+     */
+
   }, {
     key: 'render',
     value: function render() {
@@ -78761,7 +78806,8 @@ var NewTimeForm = function (_React$Component) {
                 null,
                 'Start Time'
               ),
-              _react2.default.createElement('input', { type: 'date', name: 'startDate', defaultValue: this.state.today, onChange: this.handleChange, required: true }),
+              _react2.default.createElement('input', { type: 'date', name: 'startDate', defaultValue: this.state.today,
+                onChange: this.handleChange, required: true }),
               _react2.default.createElement('input', { type: 'time', name: 'startTime', onChange: this.handleChange, required: true })
             ),
             _react2.default.createElement(
@@ -78772,7 +78818,8 @@ var NewTimeForm = function (_React$Component) {
                 null,
                 'End Time'
               ),
-              _react2.default.createElement('input', { type: 'date', name: 'endDate', defaultValue: this.state.today, onChange: this.handleChange, required: true }),
+              _react2.default.createElement('input', { type: 'date', name: 'endDate', defaultValue: this.state.today, onChange: this.handleChange,
+                required: true }),
               _react2.default.createElement('input', { type: 'time', name: 'endTime', onChange: this.handleChange, required: true })
             ),
             _react2.default.createElement(_semanticUiReact.Message, {

@@ -17,8 +17,8 @@ class App extends React.Component {
     return(
       <BrowserRouter>
         <div>
-          <Link to="/">Home Page</Link>
-          <Link to="/log-time">New Time</Link>
+          <div><Link to="/">Home Page</Link></div>
+          <div><Link to="/log-time">New Time</Link></div>
 
           <hr />
 
