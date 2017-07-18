@@ -59197,7 +59197,22 @@ var Home = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
     document.title = 'Home';
+    _this.state = {
+      hours: 0,
+      currentDate: ''
+    };
+
     _this.handleClick = _this.handleClick.bind(_this);
+
+    // Fetch initial data
+    _this.getHoursWorked().then(function (res) {
+      return res.json();
+    }).then(function (data) {
+      _this.setState(data);
+    }).catch(function (err) {
+      return console.log(err);
+    });
+
     return _this;
   }
 
@@ -59207,6 +59222,17 @@ var Home = function (_React$Component) {
       e.preventDefault();
 
       this.props.history.push('/log-time');
+    }
+  }, {
+    key: 'getHoursWorked',
+    value: function getHoursWorked() {
+      return window.fetch('/get-initial', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
     }
   }, {
     key: 'render',
@@ -59220,11 +59246,11 @@ var Home = function (_React$Component) {
           _react2.default.createElement(
             _semanticUiReact.Card,
             { color: 'teal', centered: true },
-            _react2.default.createElement(_semanticUiReact.Card.Content, { header: 'July 2017' }),
+            _react2.default.createElement(_semanticUiReact.Card.Content, { header: this.state.currentDate }),
             _react2.default.createElement(
               _semanticUiReact.Card.Content,
               null,
-              _react2.default.createElement(_semanticUiReact.Statistic, { value: '3000', label: 'Hours Worked' })
+              _react2.default.createElement(_semanticUiReact.Statistic, { value: this.state.hours, label: 'Hours Worked' })
             )
           ),
           _react2.default.createElement(

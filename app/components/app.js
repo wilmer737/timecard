@@ -14,7 +14,7 @@ class App extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <BrowserRouter>
         <div>
           <div><Link to="/">Home Page</Link></div>
