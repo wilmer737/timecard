@@ -27,7 +27,11 @@ class Home extends React.Component {
   handleClick(e) {
     e.preventDefault()
 
-    this.props.history.push('/log-time')
+    if (e.target.className.includes('log-time')) {
+      this.props.history.push('/log-time')
+    } else {
+      this.props.history.push('/hours')
+    }
   }
 
   getHoursWorked() {
@@ -52,8 +56,11 @@ class Home extends React.Component {
             </Card.Content>
           </Card>
 
-          <Button color="teal" floated="right" onClick={this.handleClick}>
+          <Button className="log-time" color="teal" onClick={this.handleClick}>
             Log Time
+          </Button>
+          <Button className='old-entries' color="red" onClick={this.handleClick} >
+            See Old stuff
           </Button>
         </Segment>
       </Container>

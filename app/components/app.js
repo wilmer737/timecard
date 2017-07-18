@@ -7,6 +7,7 @@ import {
 
 import Home from './home'
 import NewTimeForm from './log-new-time'
+import Hours from './hours'
 
 class App extends React.Component {
   constructor() {
@@ -19,11 +20,13 @@ class App extends React.Component {
         <div>
           <div><Link to="/">Home Page</Link></div>
           <div><Link to="/log-time">New Time</Link></div>
+          <div><Link to ="/hours">Logged hours</Link></div>
 
           <hr />
 
           <Route exact path="/" component={Home} />
           <Route path="/log-time" component={NewTimeForm} />
+          <Route path="/hours" component={Hours} />
         </div>
       </BrowserRouter>
     )
