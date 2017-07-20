@@ -23,7 +23,6 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.post('/new-entry', (req,res) => {
-  console.log(req.body)
   store.addEntry({
     start_time: req.body.startTime,
     end_time: req.body.endTime,
@@ -33,8 +32,8 @@ app.post('/new-entry', (req,res) => {
 
 app.post('/get-initial', (req,res) => {
   const date = new Date(), y = date.getFullYear(), m = date.getMonth()
-  const firstDay = new Date(y, m, 1);
-  const lastDay = new Date(y, m + 1, 0);
+  const firstDay = new Date(y, m, 1)
+  const lastDay = new Date(y, m + 1, 0)
 
   store.getInitialData(firstDay, lastDay).then(([data]) => {
     const fullMonth = moment().format('MMMM')
