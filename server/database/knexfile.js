@@ -1,9 +1,9 @@
 module.exports = {
   client: 'mysql',
   connection: {
-    host : 'us-cdbr-iron-east-03.cleardb.net',
+    host: process.env.DB_HOST|| '127.0.0.1',
     user: process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD || 'Sand8520',
-    database: 'timecard'
+    table: process.env.DB || 'timecard'
   }
 }
