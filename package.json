@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "8.1.4"
+  },
   "scripts": {
     "start": "node server/server.js",
     "build": "webpack",
-    "watch": "webpack -w"
+    "watch": "webpack -w",
+    "postinstall": "knex migrate:latest --knexfile server/database/knexfile.js"
   },
   "keywords": [],
   "author": "Wilmer",
