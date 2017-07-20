@@ -7,6 +7,7 @@ const moment = require('moment')
 const store = require('./database/store')
 
 const app = express()
+console.log(process.env)
 const port = process.env.PORT || 3000
 
 app.use((req,res,next) => {
