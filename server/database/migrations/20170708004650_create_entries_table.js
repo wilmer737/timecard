@@ -5,7 +5,6 @@ exports.up = function(knex, Promise) {
     t.dateTime('start_time').notNullable()
     t.dateTime('end_time').notNullable()
     t.decimal('hours_worked').notNullable()
-    t.timestamps(false, true)
   })
 };
 
