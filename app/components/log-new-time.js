@@ -8,7 +8,6 @@ import {
 } from 'semantic-ui-react'
 import moment from 'moment'
 import 'whatwg-fetch'
-import path from 'path'
 
 class NewTimeForm extends React.Component {
   /**
@@ -40,12 +39,8 @@ class NewTimeForm extends React.Component {
    */
   validateForm() {
     const end = moment(`${this.state.endDate} ${this.state.endTime}`)
-    console.log(end)
-
     const begin = moment(`${this.state.startDate} ${this.state.startTime}`)
-    console.log(begin)
-    console.log(end, begin, end.isBefore(begin))
-    
+
     if (end.isBefore(begin)) {
        throw new Error('Can\'t be doing this man')
     }
@@ -91,7 +86,6 @@ class NewTimeForm extends React.Component {
       this.validateForm()
       data.startTime = moment(startDateTime).format('YYYY-MM-DD HH:mm:ss')//new Date(startDateTime).toISOString().slice(0, 19).replace('T', ' ')
       data.endTime = moment(endDateTime).format('YYYY-MM-DD HH:mm:ss')//new Date(endDateTime).toISOString().slice(0, 19).replace('T', ' ')
-      console.log(data, this.state)
       data.hoursWorked = this.calculateHours(startDateTime, endDateTime)
     } catch (err) {
       return this.setState({error: true, errorMessage: err.message})

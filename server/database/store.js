@@ -21,4 +21,14 @@ const getInitialData = (firstDay, lastDay) => {
       return data
     })
 }
-module.exports = {addEntry, getInitialData}
+
+const getHours = (firstDay,lastDay) => {
+  return knex.select('id','start_time', 'end_time')
+    .from('entries')
+    .whereBetween('start_time', [firstDay, lastDay])
+    .then((data) => {
+      return data
+    })
+}
+
+module.exports = {addEntry, getInitialData, getHours}

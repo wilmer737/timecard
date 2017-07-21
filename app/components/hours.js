@@ -1,32 +1,42 @@
 import React from 'react'
-import {Card, Button, Dropdown} from 'semantic-ui-react'
+import 'whatwg-fetch'
+
+import Entry from './entry'
 
 class Hours extends React.Component {
   constructor(props) {
     super(props)
+
+    document.title = 'Hours'
+    this.state = {
+      entries: []
+    }
+  }
+
+  componentWillMount() {
+    this.getEntries().then(res => {
+      return res.json()
+    }).then(data => {
+      this.setState({entries: [...data]})
+    }).catch(err => {
+      return console.log(err)
+    })
+  }
+
+  getEntries() {
+    return fetch('/get-hours', {method: 'POST'})
+  }
+
+  renderItems() {
+    return this.state.entries.map(entry => {
+      return <Entry key={entry.id} start_time={entry.start_time} end_time={entry.end_time} />
+    })
   }
 
   render() {
-    const months = [
-      {
-        text: 'Janurary',
-        value: 'Janurary',
-      },
-      {
-        text: 'February',
-        value: 'February',
-      }
-    ]
     return (
-      <div className="hour-entry">
-        <Dropdown placeholder="Pick a Month" selection options={months}/>
-        <Card raised>
-          <Card.Content header="July 20, 2017"/>
-          <Card.Content description="8:00am - 530pm" />
-          <Card.Content extra >
-            <Button color="teal" floated="right">Edit</Button>
-          </Card.Content>
-        </Card>
+      <div>
+        {this.renderItems()}
       </div>
     )
   }

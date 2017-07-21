@@ -7,7 +7,6 @@ const moment = require('moment')
 const store = require('./database/store')
 
 const app = express()
-console.log(process.env)
 const port = process.env.PORT || 3000
 
 app.use((req,res,next) => {
@@ -41,6 +40,19 @@ app.post('/get-initial', (req,res) => {
     res.json(data)
   }).catch((err) => {
     console.log(err)
+    res.sendStatus(500)
+  })
+})
+
+app.post('/get-hours', (req,res) => {
+  const date = new Date(), y = date.getFullYear(), m = date.getMonth()
+  const firstDay = new Date(y, m, 1)
+  const lastDay = new Date(y, m + 1, 0)
+
+  store.getHours(firstDay, lastDay).then((data) => {
+    res.json(data)
+  }).catch(err => {
+    console.log(err.message)
     res.sendStatus(500)
   })
 })

@@ -1,27 +1,30 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
 import {Container, Segment, Card, Statistic, Button} from 'semantic-ui-react'
-
+import 'whatwg-fetch'
+import moment from 'moment'
 
 class Home extends React.Component {
   constructor(props) {
     super(props)
 
     document.title = 'Home'
-    this.state = {
-      hours: 0,
-      currentDate: ''
-    }
-
     this.handleClick = this.handleClick.bind(this)
+    this.state = {
+      currentDate: moment().format('MMMM YYYY'),
+      hours: 0,
+    }
+  }
 
+  componentWillMount() {
     // Fetch initial data
     this.getHoursWorked().then((res) => {
       return res.json()
     }).then(data => {
-      this.setState(data)
-    }).catch(err => console.log(err))
 
+      const hours = (typeof data.hours === 'undefined' || !data.hours) ? this.state.hours : data.hours
+      this.setState({hours})
+    }).catch(err => console.log(err))
   }
 
   handleClick(e) {
@@ -35,7 +38,7 @@ class Home extends React.Component {
   }
 
   getHoursWorked() {
-    return window.fetch('/get-initial', {
+    return fetch('/get-initial', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
