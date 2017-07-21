@@ -39,10 +39,18 @@ class NewTimeForm extends React.Component {
    * Validates form
    */
   validateForm() {
-    if (moment(`${this.state.endDate} ${this.state.endTime}`).isBefore(`${this.state.startDate} ${this.state.startTime}`)) {
-      throw new Error('Start Date has to be before End Date')
-    }
+    const end = moment(`${this.state.endDate} ${this.state.endTime}`)
+    console.log(end)
 
+    const begin = moment(`${this.state.startDate} ${this.state.startTime}`)
+    console.log(begin)
+    console.log(end, begin, end.isBefore(begin))
+    
+    if (end.isBefore(begin)) {
+       throw new Error('Can\'t be doing this man')
+    }
+    
+    return true
   }
 
   /**
@@ -81,11 +89,12 @@ class NewTimeForm extends React.Component {
     const data = {}
     try {
       this.validateForm()
-      data.startTime = new Date(startDateTime).toISOString().slice(0, 19).replace('T', ' ')
-      data.endTime = new Date(endDateTime).toISOString().slice(0, 19).replace('T', ' ')
+      data.startTime = moment(startDateTime).format('YYYY-MM-DD HH:mm:ss')//new Date(startDateTime).toISOString().slice(0, 19).replace('T', ' ')
+      data.endTime = moment(endDateTime).format('YYYY-MM-DD HH:mm:ss')//new Date(endDateTime).toISOString().slice(0, 19).replace('T', ' ')
+      console.log(data, this.state)
       data.hoursWorked = this.calculateHours(startDateTime, endDateTime)
     } catch (err) {
-      this.setState({error: true, errorMessage: err.message})
+      return this.setState({error: true, errorMessage: err.message})
     }
   
 
@@ -135,7 +144,7 @@ class NewTimeForm extends React.Component {
             <Message
               error
               header='Error'
-              content='Start Date has to be before End Date'
+              content={this.state.errorMessage}
             />
             <Button color="teal" floated="right">Submit</Button>
           </Form>
