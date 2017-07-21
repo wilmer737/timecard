@@ -7,6 +7,8 @@ import {
   Message
 } from 'semantic-ui-react'
 import moment from 'moment'
+import 'whatwg-fetch'
+import path from 'path'
 
 class NewTimeForm extends React.Component {
   /**
@@ -85,8 +87,9 @@ class NewTimeForm extends React.Component {
     } catch (err) {
       this.setState({error: true, errorMessage: err.message})
     }
+  
 
-    return window.fetch('/new-entry', {
+    return fetch('/new-entry', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
