@@ -59678,6 +59678,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Home = function (_React$Component) {
   _inherits(Home, _React$Component);
 
+  /**
+   * Constructor
+   */
   function Home(props) {
     _classCallCheck(this, Home);
 
@@ -59692,20 +59695,23 @@ var Home = function (_React$Component) {
     return _this;
   }
 
+  /**
+   * Fetches initial data for the state
+   */
+
+
   _createClass(Home, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
       var _this2 = this;
 
-      // Fetch initial data
       this.getHoursWorked().then(function (res) {
         return res.json();
       }).then(function (data) {
-
         var hours = typeof data.hours === 'undefined' || !data.hours ? _this2.state.hours : data.hours;
         _this2.setState({ hours: hours });
       }).catch(function (err) {
-        return console.log(err);
+        return console.log(err.message);
       });
     }
   }, {
@@ -59722,12 +59728,17 @@ var Home = function (_React$Component) {
   }, {
     key: 'getHoursWorked',
     value: function getHoursWorked() {
+      var today = (0, _moment2.default)();
+      var firstDay = today.startOf('month').format('YYYY-MM-DD');
+      var lastDay = today.endOf('month').format('YYYY-MM-DD');
+
       return fetch('/get-initial', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({ firstDay: firstDay, lastDay: lastDay })
       });
     }
   }, {
@@ -79640,6 +79651,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(1);
@@ -79653,8 +79666,6 @@ var _entry = __webpack_require__(1015);
 var _entry2 = _interopRequireDefault(_entry);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -79680,15 +79691,14 @@ var Hours = function (_React$Component) {
   _createClass(Hours, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      var _this2 = this;
-
-      this.getEntries().then(function (res) {
-        return res.json();
-      }).then(function (data) {
-        _this2.setState({ entries: [].concat(_toConsumableArray(data)) });
-      }).catch(function (err) {
-        return console.log(err);
-      });
+      // console.log(this.props)
+      // this.getEntries().then(res => {
+      //   return res.json()
+      // }).then(data => {
+      //   this.setState({entries: [...data]})
+      // }).catch(err => {
+      //   return console.log(err)
+      // })
     }
   }, {
     key: 'getEntries',
@@ -79698,8 +79708,11 @@ var Hours = function (_React$Component) {
   }, {
     key: 'renderItems',
     value: function renderItems() {
-      return this.state.entries.map(function (entry) {
-        return _react2.default.createElement(_entry2.default, { key: entry.id, start_time: entry.start_time, end_time: entry.end_time });
+      return this.state.entries.map(function (_ref) {
+        var id = _ref.id,
+            restProps = _ref.restProps;
+
+        return _react2.default.createElement(_entry2.default, _extends({ key: id }, restProps));
       });
     }
   }, {
@@ -79708,6 +79721,7 @@ var Hours = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
+        'y3',
         this.renderItems()
       );
     }

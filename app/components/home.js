@@ -5,6 +5,9 @@ import 'whatwg-fetch'
 import moment from 'moment'
 
 class Home extends React.Component {
+  /**
+   * Constructor
+   */
   constructor(props) {
     super(props)
 
@@ -16,15 +19,16 @@ class Home extends React.Component {
     }
   }
 
+  /**
+   * Fetches initial data for the state
+   */
   componentWillMount() {
-    // Fetch initial data
     this.getHoursWorked().then((res) => {
       return res.json()
     }).then(data => {
-
       const hours = (typeof data.hours === 'undefined' || !data.hours) ? this.state.hours : data.hours
       this.setState({hours})
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err.message))
   }
 
   handleClick(e) {
@@ -38,12 +42,17 @@ class Home extends React.Component {
   }
 
   getHoursWorked() {
+    const today = moment()
+    const firstDay = today.startOf('month').format('YYYY-MM-DD')
+    const lastDay = today.endOf('month').format('YYYY-MM-DD')
+
     return fetch('/get-initial', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({firstDay, lastDay})
     })
   }
 

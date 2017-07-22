@@ -14,13 +14,14 @@ class Hours extends React.Component {
   }
 
   componentWillMount() {
-    this.getEntries().then(res => {
-      return res.json()
-    }).then(data => {
-      this.setState({entries: [...data]})
-    }).catch(err => {
-      return console.log(err)
-    })
+    // console.log(this.props)
+    // this.getEntries().then(res => {
+    //   return res.json()
+    // }).then(data => {
+    //   this.setState({entries: [...data]})
+    // }).catch(err => {
+    //   return console.log(err)
+    // })
   }
 
   getEntries() {
@@ -28,14 +29,14 @@ class Hours extends React.Component {
   }
 
   renderItems() {
-    return this.state.entries.map(entry => {
-      return <Entry key={entry.id} start_time={entry.start_time} end_time={entry.end_time} />
+    return this.state.entries.map(({id, restProps}) => {
+      return <Entry key={id} {...restProps} />
     })
   }
 
   render() {
     return (
-      <div>
+      <div>y3
         {this.renderItems()}
       </div>
     )

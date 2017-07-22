@@ -30,31 +30,26 @@ app.post('/new-entry', (req,res) => {
 })
 
 app.post('/get-initial', (req,res) => {
-  const date = new Date(), y = date.getFullYear(), m = date.getMonth()
-  const firstDay = new Date(y, m, 1)
-  const lastDay = new Date(y, m + 1, 0)
-
-  store.getInitialData(firstDay, lastDay).then(([data]) => {
-    const fullMonth = moment().format('MMMM')
-    data.currentDate = `${fullMonth} ${y}`
-    res.json(data)
-  }).catch((err) => {
+  store.getInitialData(req.body).then(data => {
+    res.json({hours: data})
+  }).catch(err => {
     console.log(err)
     res.sendStatus(500)
   })
 })
 
 app.post('/get-hours', (req,res) => {
-  const date = new Date(), y = date.getFullYear(), m = date.getMonth()
-  const firstDay = new Date(y, m, 1)
-  const lastDay = new Date(y, m + 1, 0)
+  store.getHours().then(data => {console.log(data)})
+  // const date = new Date(), y = date.getFullYear(), m = date.getMonth()
+  // const firstDay = new Date(y, m, 1)
+  // const lastDay = new Date(y, m + 1, 0)
 
-  store.getHours(firstDay, lastDay).then((data) => {
-    res.json(data)
-  }).catch(err => {
-    console.log(err.message)
-    res.sendStatus(500)
-  })
+  // store.getHours(firstDay, lastDay).then((data) => {
+  //   res.json(data)
+  // }).catch(err => {
+  //   console.log(err.message)
+  //   res.sendStatus(500)
+  // })
 })
 
 /* todo: set up server side rendering
