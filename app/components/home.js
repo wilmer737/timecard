@@ -1,5 +1,5 @@
 import React from 'react'
-import {withRouter} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {Container, Segment, Card, Statistic, Button} from 'semantic-ui-react'
 import 'whatwg-fetch'
 import moment from 'moment'
@@ -12,7 +12,7 @@ class Home extends React.Component {
     super(props)
 
     document.title = 'Home'
-    this.handleClick = this.handleClick.bind(this)
+    // this.handleClick = this.handleClick.bind(this)
     this.state = {
       currentDate: moment().format('MMMM YYYY'),
       hours: 0,
@@ -31,15 +31,15 @@ class Home extends React.Component {
     }).catch(err => console.log(err.message))
   }
 
-  handleClick(e) {
-    e.preventDefault()
-
-    if (e.target.className.includes('log-time')) {
-      this.props.history.push('/log-time')
-    } else {
-      this.props.history.push('/hours')
-    }
-  }
+  // handleClick(e) {
+  //   e.preventDefault()
+  //
+  //   if (e.target.className.includes('log-time')) {
+  //     this.props.history.push('/log-time')
+  //   } else {
+  //     this.props.history.push('/hours')
+  //   }
+  // }
 
   getHoursWorked() {
     const today = moment()
@@ -68,16 +68,18 @@ class Home extends React.Component {
             </Card.Content>
           </Card>
 
-          <Button className="log-time" color="teal" onClick={this.handleClick}>
-            Log Time
-          </Button>
-          <Button className='old-entries' color="red" onClick={this.handleClick} >
-            See Old stuff
-          </Button>
+          <Link to="/log-time">
+            <Button className="log-time" color="teal" content="Log Time" />
+          </Link>
+
+          <Link to="/hours">
+            <Button className='old-entries' color="red" onClick={this.handleClick} content="See Hours"/>
+          </Link>
+
         </Segment>
       </Container>
     )
   }
 }
 
-export default withRouter(Home)
+export default Home

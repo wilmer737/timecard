@@ -22,6 +22,7 @@ const getHours = ({firstDay,lastDay}) => {
     'start_time AS current_day'
   ).from('entries')
     .whereBetween('start_time', [firstDay, lastDay])
+    .orderBy('current_day', 'desc')
     .then(data => data)
 }
 

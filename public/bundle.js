@@ -59687,7 +59687,7 @@ var Home = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
     document.title = 'Home';
-    _this.handleClick = _this.handleClick.bind(_this);
+    // this.handleClick = this.handleClick.bind(this)
     _this.state = {
       currentDate: (0, _moment2.default)().format('MMMM YYYY'),
       hours: 0
@@ -59714,17 +59714,17 @@ var Home = function (_React$Component) {
         return console.log(err.message);
       });
     }
-  }, {
-    key: 'handleClick',
-    value: function handleClick(e) {
-      e.preventDefault();
 
-      if (e.target.className.includes('log-time')) {
-        this.props.history.push('/log-time');
-      } else {
-        this.props.history.push('/hours');
-      }
-    }
+    // handleClick(e) {
+    //   e.preventDefault()
+    //
+    //   if (e.target.className.includes('log-time')) {
+    //     this.props.history.push('/log-time')
+    //   } else {
+    //     this.props.history.push('/hours')
+    //   }
+    // }
+
   }, {
     key: 'getHoursWorked',
     value: function getHoursWorked() {
@@ -59761,14 +59761,14 @@ var Home = function (_React$Component) {
             )
           ),
           _react2.default.createElement(
-            _semanticUiReact.Button,
-            { className: 'log-time', color: 'teal', onClick: this.handleClick },
-            'Log Time'
+            _reactRouterDom.Link,
+            { to: '/log-time' },
+            _react2.default.createElement(_semanticUiReact.Button, { className: 'log-time', color: 'teal', content: 'Log Time' })
           ),
           _react2.default.createElement(
-            _semanticUiReact.Button,
-            { className: 'old-entries', color: 'red', onClick: this.handleClick },
-            'See Old stuff'
+            _reactRouterDom.Link,
+            { to: '/hours' },
+            _react2.default.createElement(_semanticUiReact.Button, { className: 'old-entries', color: 'red', onClick: this.handleClick, content: 'See Hours' })
           )
         )
       );
@@ -59778,7 +59778,7 @@ var Home = function (_React$Component) {
   return Home;
 }(_react2.default.Component);
 
-exports.default = (0, _reactRouterDom.withRouter)(Home);
+exports.default = Home;
 
 /***/ }),
 /* 694 */

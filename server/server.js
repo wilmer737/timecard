@@ -42,7 +42,7 @@ app.post('/get-hours', (req,res) => {
   store.getHours(req.body).then(data => {
     res.json(data) 
   }).catch(err => {
-    consoel.log(err)
+    console.log(err)
     res.sendStatus(500)
   })
 })
