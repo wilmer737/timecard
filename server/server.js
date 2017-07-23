@@ -39,23 +39,19 @@ app.post('/get-initial', (req,res) => {
 })
 
 app.post('/get-hours', (req,res) => {
-  store.getHours().then(data => {console.log(data)})
-  // const date = new Date(), y = date.getFullYear(), m = date.getMonth()
-  // const firstDay = new Date(y, m, 1)
-  // const lastDay = new Date(y, m + 1, 0)
-
-  // store.getHours(firstDay, lastDay).then((data) => {
-  //   res.json(data)
-  // }).catch(err => {
-  //   console.log(err.message)
-  //   res.sendStatus(500)
-  // })
+  store.getHours(req.body).then(data => {
+    res.json(data) 
+  }).catch(err => {
+    consoel.log(err)
+    res.sendStatus(500)
+  })
 })
 
 /* todo: set up server side rendering
+*/
 app.get('*', (req,res) => {
-
-})*/
+  res.redirect('/')
+})
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)

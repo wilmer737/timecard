@@ -16,6 +16,7 @@
   "author": "Wilmer",
   "license": "MIT",
   "dependencies": {
+    "babel-preset-stage-2": "^6.24.1",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "express-favicon": "^2.0.0",

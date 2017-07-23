@@ -79661,11 +79661,19 @@ var _react2 = _interopRequireDefault(_react);
 
 __webpack_require__(242);
 
+var _moment = __webpack_require__(6);
+
+var _moment2 = _interopRequireDefault(_moment);
+
 var _entry = __webpack_require__(1015);
 
 var _entry2 = _interopRequireDefault(_entry);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -79691,26 +79699,38 @@ var Hours = function (_React$Component) {
   _createClass(Hours, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      // console.log(this.props)
-      // this.getEntries().then(res => {
-      //   return res.json()
-      // }).then(data => {
-      //   this.setState({entries: [...data]})
-      // }).catch(err => {
-      //   return console.log(err)
-      // })
+      var _this2 = this;
+
+      this.getEntries().then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        _this2.setState({ entries: [].concat(_toConsumableArray(data)) });
+      }).catch(function (err) {
+        return console.log(err);
+      });
     }
   }, {
     key: 'getEntries',
     value: function getEntries() {
-      return fetch('/get-hours', { method: 'POST' });
+      var today = (0, _moment2.default)();
+      var firstDay = today.startOf('month').format('YYYY-MM-DD');
+      var lastDay = today.endOf('month').format('YYYY-MM-DD');
+
+      return fetch('/get-hours', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ firstDay: firstDay, lastDay: lastDay })
+      });
     }
   }, {
     key: 'renderItems',
     value: function renderItems() {
       return this.state.entries.map(function (_ref) {
         var id = _ref.id,
-            restProps = _ref.restProps;
+            restProps = _objectWithoutProperties(_ref, ['id']);
 
         return _react2.default.createElement(_entry2.default, _extends({ key: id }, restProps));
       });
@@ -79721,7 +79741,6 @@ var Hours = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'y3',
         this.renderItems()
       );
     }
@@ -79743,8 +79762,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
@@ -79757,60 +79774,30 @@ var _moment2 = _interopRequireDefault(_moment);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Entry = function (_React$Component) {
-  _inherits(Entry, _React$Component);
-
-  function Entry(props) {
-    _classCallCheck(this, Entry);
-
-    return _possibleConstructorReturn(this, (Entry.__proto__ || Object.getPrototypeOf(Entry)).call(this, props));
-  }
-
-  _createClass(Entry, [{
-    key: 'render',
-    value: function render() {
-      var months = [{
-        text: 'Janurary',
-        value: 'Janurary'
-      }, {
-        text: 'February',
-        value: 'February'
-      }];
-      var _props = this.props,
-          start_time = _props.start_time,
-          end_time = _props.end_time;
-
-      return _react2.default.createElement(
-        'div',
-        { className: 'hour-entry' },
-        _react2.default.createElement(_semanticUiReact.Dropdown, { placeholder: 'Pick a Month', selection: true, options: months }),
+var Entry = function Entry(_ref) {
+  var start_time = _ref.start_time,
+      end_time = _ref.end_time,
+      current_day = _ref.current_day;
+  return _react2.default.createElement(
+    'div',
+    { className: 'hour-entry' },
+    _react2.default.createElement(
+      _semanticUiReact.Card,
+      { raised: true },
+      _react2.default.createElement(_semanticUiReact.Card.Content, { header: (0, _moment2.default)(current_day).format('MMMM Do') }),
+      _react2.default.createElement(_semanticUiReact.Card.Content, { description: start_time + ' - ' + end_time }),
+      _react2.default.createElement(
+        _semanticUiReact.Card.Content,
+        { extra: true },
         _react2.default.createElement(
-          _semanticUiReact.Card,
-          { raised: true },
-          _react2.default.createElement(_semanticUiReact.Card.Content, { header: start_time }),
-          _react2.default.createElement(_semanticUiReact.Card.Content, { description: '8:00am - 530pm' }),
-          _react2.default.createElement(
-            _semanticUiReact.Card.Content,
-            { extra: true },
-            _react2.default.createElement(
-              _semanticUiReact.Button,
-              { color: 'teal', floated: 'right' },
-              'Edit'
-            )
-          )
+          _semanticUiReact.Button,
+          { color: 'teal', floated: 'right' },
+          'Edit'
         )
-      );
-    }
-  }]);
-
-  return Entry;
-}(_react2.default.Component);
+      )
+    )
+  );
+};
 
 exports.default = Entry;
 
