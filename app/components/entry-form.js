@@ -13,11 +13,10 @@ class EntryForm extends React.Component {
   constructor(props) {
     super(props)
 
-    const date = moment(this.props.start_time)
     this.state = {
-      startDate: date.format('YYYY-MM-DD'),
+      startDate: '',
       startTime: '',
-      endDate: date.format('YYYY-MM-DD'),
+      endDate: '',
       endTime: '',
       error: false,
       errorMessage: ''
@@ -25,6 +24,19 @@ class EntryForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    const {start_time, end_time} = this.props
+    const start = moment(start_time)
+    const end = moment(end_time)
+    
+    return this.setState({
+      startDate: start.format('YYYY-MM-DD'),
+      endDate: end.format('YYYY-MM-DD'),
+      startTime: start.format('H:mm'),
+      endTime: end.format('H:mm')
+    })
   }
 
   handleChange(e) {
@@ -35,33 +47,18 @@ class EntryForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-
     const startDateTime = `${this.state.startDate} ${this.state.startTime}`
     const endDateTime = `${this.state.endDate} ${this.state.endTime}`
-
     const data = {}
     try {
       this.validateForm()
-      data.startTime = moment(startDateTime).format('YYYY-MM-DD HH:mm:ss')//new Date(startDateTime).toISOString().slice(0, 19).replace('T', ' ')
-      data.endTime = moment(endDateTime).format('YYYY-MM-DD HH:mm:ss')//new Date(endDateTime).toISOString().slice(0, 19).replace('T', ' ')
-      data.hoursWorked = this.calculateHours(startDateTime, endDateTime)
-      this.submitForm(data)
+      data.start_time = moment(startDateTime).format('YYYY-MM-DD HH:mm:ss')
+      data.end_time = moment(endDateTime).format('YYYY-MM-DD HH:mm:ss')
+      data.hours_worked = this.calculateHours(startDateTime, endDateTime)
+      this.props.submitForm(data)
     } catch (err) {
       return this.setState({error: true, errorMessage: err.message})
     }
-  }
-
-  submitForm(data) {
-    return fetch('/new-entry', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then(() => (this.props.handleSubmit())).catch(err => {
-      throw new Error('failed to retrieve data')
-    })
   }
 
   validateForm() {
@@ -71,7 +68,6 @@ class EntryForm extends React.Component {
     if (end.isBefore(begin)) {
        throw new Error('Can\'t be doing this man')
     }
-    
     return true
   }
 
@@ -93,24 +89,24 @@ class EntryForm extends React.Component {
 
   render() {
     const {start_time, end_time} = this.props
-    const {startDate} = this.state
-
+    const start = moment(start_time)
+    const end = moment(end_time)
     return (
       <Container text>
         <Segment raised padded='very'>
           <Form onSubmit={this.handleSubmit} error={this.state.error}>
             <Form.Field>
               <label>Start Time</label>
-              <input type="date" name="startDate" defaultValue={startDate}
+              <input type="date" name="startDate" defaultValue={start.format('YYYY-MM-DD')}
                      onChange={this.handleChange} required/>
-              <input type="time" name="startTime" 
+              <input type="time" name="startTime" defaultValue={start.format('H:mm')}
                      onChange={this.handleChange} required/>
             </Form.Field>
             <Form.Field>
               <label>End Time</label>
-              <input type="date" name="endDate" defaultValue={startDate}
+              <input type="date" name="endDate" defaultValue={end.format('YYYY-MM-DD')}
                      onChange={this.handleChange} required/>
-              <input type="time" name="endTime" 
+              <input type="time" name="endTime" defaultValue={end.format('H:mm')}
                      onChange={this.handleChange} required/>
             </Form.Field>
             <Message
@@ -118,7 +114,7 @@ class EntryForm extends React.Component {
               header='Error'
               content={this.state.errorMessage}
             />
-            <Button color="teal" floated="right">Submit</Button>
+            <Button color="teal" floated="right" type="submit">Submit</Button>
           </Form>
         </Segment>
       </Container>

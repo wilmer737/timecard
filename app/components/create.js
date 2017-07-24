@@ -19,11 +19,21 @@ class Create extends React.Component {
       entry,
       submitted: false
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
+
+    this.submitForm = this.submitForm.bind(this)
   }
 
-  handleSubmit() {
-    this.setState({submitted: true})
+  submitForm(data) {
+    return fetch('/new-entry', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(() => (this.setState({submitted:true}))).catch(err => {
+      throw new Error('failed to retrieve data ' + err.message)
+    })
   }
 
   render() {
@@ -32,7 +42,7 @@ class Create extends React.Component {
     return (
       <div>
         Create
-        {submitted ? <Redirect to="/"/> : <EntryForm {...entry} handleSubmit={this.handleSubmit} />}
+        {submitted ? <Redirect to="/"/> : <EntryForm {...entry} submitForm={this.submitForm}/>}
       </div>
     )
   }
