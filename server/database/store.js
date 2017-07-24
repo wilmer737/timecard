@@ -22,7 +22,18 @@ const getHours = ({firstDay,lastDay}) => {
     'start_time AS current_day'
   ).from('entries')
     .whereBetween('start_time', [firstDay, lastDay])
+    .orderBy('current_day', 'desc')
     .then(data => data)
 }
 
-module.exports = {addEntry, getInitialData, getHours}
+const getEntry = ({id}) => {
+  return knex.select('*').from('entries').where('id',id).then(([data]) => data)
+}
+
+const updateEntry = ({id, newValues}) => {
+  return knex('entries')
+    .where('id', id)
+    .update(newValues).then(data => data)
+}
+
+module.exports = {addEntry, getInitialData, getHours, getEntry, updateEntry}

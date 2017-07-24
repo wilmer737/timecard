@@ -22,11 +22,7 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.post('/new-entry', (req,res) => {
-  store.addEntry({
-    start_time: req.body.startTime,
-    end_time: req.body.endTime,
-    hours_worked: req.body.hoursWorked
-  }).then(() => res.sendStatus(200))
+  store.addEntry(req.body).then(() => res.sendStatus(200))
 })
 
 app.post('/get-initial', (req,res) => {
@@ -42,7 +38,25 @@ app.post('/get-hours', (req,res) => {
   store.getHours(req.body).then(data => {
     res.json(data) 
   }).catch(err => {
-    consoel.log(err)
+    console.log(err)
+    res.sendStatus(500)
+  })
+})
+
+app.post('/get-entry', (req,res) => {
+  store.getEntry(req.body).then(data => {
+    res.json(data)
+  }).catch(err => {
+    console.log(err)
+    res.sendStatus(500)
+  })
+})
+
+app.post('/update-entry', (req,res) => {
+  store.updateEntry(req.body).then(data => {
+    res.sendStatus(200)
+  }).catch (err => {
+    console.log(err)
     res.sendStatus(500)
   })
 })

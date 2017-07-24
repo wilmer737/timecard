@@ -20,7 +20,7 @@ class Hours extends React.Component {
     }).then(data => {
       this.setState({entries: [...data]})
     }).catch(err => {
-      return console.log(err)
+      return console.log(err.message)
     })
   }
 
@@ -41,7 +41,7 @@ class Hours extends React.Component {
 
   renderItems() {
     return this.state.entries.map(({id, ...restProps}) => {
-      return <Entry key={id} {...restProps} />
+      return <Entry key={id} {...restProps} id={id}/>
     })
   }
 
