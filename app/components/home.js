@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {Container, Segment, Card, Statistic, Button} from 'semantic-ui-react'
+import {Container, Segment, Card, Statistic, Button, Icon, Loader} from 'semantic-ui-react'
 import 'whatwg-fetch'
 import moment from 'moment'
 
@@ -12,34 +12,20 @@ class Home extends React.Component {
     super(props)
 
     document.title = 'Home'
-    // this.handleClick = this.handleClick.bind(this)
-    this.state = {
-      currentDate: moment().format('MMMM YYYY'),
-      hours: 0,
-    }
+    this.state = {hours: 0, isLoading: true}
   }
 
   /**
    * Fetches initial data for the state
    */
-  componentWillMount() {
+  componentDidMount() {
     this.getHoursWorked().then((res) => {
       return res.json()
     }).then(data => {
       const hours = (typeof data.hours === 'undefined' || !data.hours) ? this.state.hours : data.hours
-      this.setState({hours})
+      return this.setState({hours, isLoading: false})
     }).catch(err => console.log(err.message))
   }
-
-  // handleClick(e) {
-  //   e.preventDefault()
-  //
-  //   if (e.target.className.includes('log-time')) {
-  //     this.props.history.push('/log-time')
-  //   } else {
-  //     this.props.history.push('/hours')
-  //   }
-  // }
 
   getHoursWorked() {
     const today = moment()
@@ -57,23 +43,24 @@ class Home extends React.Component {
   }
 
   render() {
+    const {hours, isLoading} = this.state
     return(
       <Container text textAlign='center'>
         <Segment raised padded='very'>
 
           <Card color="teal" centered >
-            <Card.Content header={this.state.currentDate} />
+            <Card.Content header={moment().format('MMMM YYYY')} />
             <Card.Content>
-              <Statistic value={this.state.hours} label="Hours Worked"/>
+              {isLoading ? <Loader active inline/> : <Statistic value={hours} label="Hours Worked"/>}
             </Card.Content>
           </Card>
 
-          <Link to="/log-time">
+          <Link to="/create">
             <Button className="log-time" color="teal" content="Log Time" />
           </Link>
 
           <Link to="/hours">
-            <Button className='old-entries' color="red" onClick={this.handleClick} content="See Hours"/>
+            <Button className='old-entries' color="red" content="See Hours"/>
           </Link>
 
         </Segment>
