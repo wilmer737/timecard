@@ -12,7 +12,6 @@ class Home extends React.Component {
     super(props)
 
     document.title = 'Home'
-    // this.handleClick = this.handleClick.bind(this)
     this.state = {
       currentDate: moment().format('MMMM YYYY'),
       hours: 0,
@@ -30,16 +29,6 @@ class Home extends React.Component {
       this.setState({hours})
     }).catch(err => console.log(err.message))
   }
-
-  // handleClick(e) {
-  //   e.preventDefault()
-  //
-  //   if (e.target.className.includes('log-time')) {
-  //     this.props.history.push('/log-time')
-  //   } else {
-  //     this.props.history.push('/hours')
-  //   }
-  // }
 
   getHoursWorked() {
     const today = moment()
@@ -68,8 +57,8 @@ class Home extends React.Component {
             </Card.Content>
           </Card>
 
-          <Link to="/log-time">
-            <Button className="log-time" color="teal" content="Log Time" />
+          <Link to="/create">
+            <Button className="log-time" color="teal" content="Create" />
           </Link>
 
           <Link to="/hours">

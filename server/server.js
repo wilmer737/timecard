@@ -47,6 +47,16 @@ app.post('/get-hours', (req,res) => {
   })
 })
 
+app.post('/get-entry', (req,res) => {
+  store.getEntry(req.body).then(data => {
+    console.log(data)
+    res.json(data)
+  }).catch(err => {
+    console.log(err)
+    res.sendStatus(500)
+  })
+})
+
 /* todo: set up server side rendering
 */
 app.get('*', (req,res) => {

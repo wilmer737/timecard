@@ -8,6 +8,8 @@ import {
 import Home from './home'
 import NewTimeForm from './log-new-time'
 import Hours from './hours'
+import Update from './update'
+import Create from './create'
 
 class App extends React.Component {
   constructor() {
@@ -18,15 +20,16 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <div><Link to="/">Home Page</Link></div>
+          {/* <div><Link to="/">Home Page</Link></div>
           <div><Link to="/log-time">New Time</Link></div>
-          <div><Link to ="/hours">Logged hours</Link></div>
-
+          <div><Link to ="/hours">Logged hours</Link></div> */}
+          Timecard app
           <hr />
 
           <Route exact path="/" component={Home} />
-          <Route path="/log-time" component={NewTimeForm} />
+          <Route path="/create" component={Create} />
           <Route path="/hours" component={Hours} />
+          <Route path="/update/:id" component={Update} />
         </div>
       </BrowserRouter>
     )

@@ -26,4 +26,8 @@ const getHours = ({firstDay,lastDay}) => {
     .then(data => data)
 }
 
-module.exports = {addEntry, getInitialData, getHours}
+const getEntry = ({id}) => {
+  return knex.select('*').from('entries').where('id',id).then(([data]) => data)
+}
+
+module.exports = {addEntry, getInitialData, getHours, getEntry}
