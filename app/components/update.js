@@ -1,7 +1,6 @@
 import React from 'react'
 import 'whatwg-fetch'
 
-import NewTimeForm from './log-new-time'
 import EntryForm from './entry-form'
 
 class Update extends React.Component {
@@ -16,7 +15,7 @@ class Update extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getRecord().then(res => res.json()
     ).then(entry => this.setState({entry})
     ).catch(err => {

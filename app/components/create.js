@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React from 'react'
+import {Redirect} from 'react-router-dom'
 
 import EntryForm from './entry-form'
 
@@ -15,15 +16,23 @@ class Create extends React.Component {
 
     this.state = {
       action: 'create',
-      entry
+      entry,
+      submitted: false
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit() {
+    this.setState({submitted: true})
   }
 
   render() {
+    const {entry,submitted} = this.state
+
     return (
       <div>
         Create
-        <EntryForm entry={this.state.entry} />
+        {submitted ? <Redirect to="/"/> : <EntryForm {...entry} handleSubmit={this.handleSubmit} />}
       </div>
     )
   }

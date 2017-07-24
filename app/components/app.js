@@ -2,7 +2,8 @@ import React from 'react'
 import {
   BrowserRouter,
   Route,
-  Link
+  Link,
+  NavLink
 } from 'react-router-dom'
 
 import Home from './home'
@@ -20,10 +21,8 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          {/* <div><Link to="/">Home Page</Link></div>
-          <div><Link to="/log-time">New Time</Link></div>
-          <div><Link to ="/hours">Logged hours</Link></div> */}
-          Timecard app
+          <NavLink to='/' exact activeStyle={{fontWeight:'bold',color:'teal'}} >Home</NavLink>&nbsp;
+          <NavLink to='/create' exact activeStyle={{fontWeight:'bold',color:'teal'}} >Create</NavLink>
           <hr />
 
           <Route exact path="/" component={Home} />
