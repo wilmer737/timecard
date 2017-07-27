@@ -46,7 +46,7 @@ class Home extends React.Component {
     const {hours, isLoading} = this.state
     return(
       <Container text textAlign='center'>
-        <Segment raised padded='very'>
+        <Segment raised padded='very' vertical color='teal'>
 
           <Card color="teal" centered >
             <Card.Content header={moment().format('MMMM YYYY')} />

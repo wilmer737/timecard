@@ -1,6 +1,7 @@
 import React from 'react'
 import 'whatwg-fetch'
 import moment from 'moment'
+import {Container} from 'semantic-ui-react'
 
 import Entry from './entry'
 
@@ -47,9 +48,9 @@ class Hours extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container textAlign='center'>
         {this.renderItems()}
-      </div>
+      </Container>
     )
   }
 }
