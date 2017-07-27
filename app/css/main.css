@@ -6,3 +6,7 @@ body {
 .segment {
   background-color: whitesmoke !important
 }
+
+i.ellipsis {
+  float: right;
+}

@@ -61,6 +61,14 @@ app.post('/update-entry', (req,res) => {
   })
 })
 
+app.post('/delete', (req,res) => {
+  store.deleteEntry(req.body).then(data => {
+    res.sendStatus(200)
+  }).catch(err => {
+    console.log(err)
+    res.sendStatus(500)
+  }) 
+})
 /* todo: set up server side rendering
 */
 app.get('*', (req,res) => {

@@ -36,4 +36,17 @@ const updateEntry = ({id, newValues}) => {
     .update(newValues).then(data => data)
 }
 
-module.exports = {addEntry, getInitialData, getHours, getEntry, updateEntry}
+const deleteEntry = ({id}) => {
+  return knex('entries')
+    .where('id', id)
+    .del()
+}
+
+module.exports = {
+  addEntry,
+  getInitialData,
+  getHours,
+  getEntry,
+  updateEntry,
+  deleteEntry
+}
