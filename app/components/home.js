@@ -4,6 +4,8 @@ import {Container, Segment, Card, Statistic, Button, Icon, Loader} from 'semanti
 import 'whatwg-fetch'
 import moment from 'moment'
 
+import {getHoursWorked} from '../../api/api'
+
 class Home extends React.Component {
   /**
    * Constructor
@@ -19,27 +21,12 @@ class Home extends React.Component {
    * Fetches initial data for the state
    */
   componentDidMount() {
-    this.getHoursWorked().then((res) => {
+    getHoursWorked().then((res) => {
       return res.json()
     }).then(data => {
       const hours = (typeof data.hours === 'undefined' || !data.hours) ? this.state.hours : data.hours
       return this.setState({hours, isLoading: false})
     }).catch(err => console.log(err.message))
-  }
-
-  getHoursWorked() {
-    const today = moment()
-    const firstDay = today.startOf('month').format('YYYY-MM-DD')
-    const lastDay = today.endOf('month').format('YYYY-MM-DD')
-
-    return fetch('/get-initial', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({firstDay, lastDay})
-    })
   }
 
   render() {

@@ -20,7 +20,7 @@ class Navbar extends React.Component {
   render() {
     const {activeItem} = this.state
     return (
-      <Menu inverted color='teal' pointing size='large'>
+      <Menu inverted color='teal' size='large'>
         <Menu.Item name='/' header as={Link} to='/' active={activeItem === '/'} onClick={this.handleClick} >TimeKeeper</Menu.Item>
         <Menu.Item name='create' as={Link} to='/create' active={activeItem === 'create'} onClick={this.handleClick} >Log Hours</Menu.Item>
         <Menu.Item name='hours' as={Link} to='/hours' active={activeItem === 'hours'} onClick={this.handleClick} >View Hours</Menu.Item>        

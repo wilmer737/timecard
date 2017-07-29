@@ -14,23 +14,13 @@ class Hours extends React.Component {
     document.title = 'Hours'
     this.state = {
       entries: [],
-      messageInfo: {}
+      messageInfo: {hidden: true}
     }
     this.handleDeleteClick = this.handleDeleteClick.bind(this)
     this.handleDismiss = this.handleDismiss.bind(this)
   }
 
   componentDidMount() {
-    this.getEntries().then(res => {
-      return res.json()
-    }).then(data => {
-      this.setState({entries: [...data]})
-    }).catch(err => {
-      return console.log(err.message)
-    })
-  }
-
-  componentWillUpdate() {
     this.getEntries().then(res => {
       return res.json()
     }).then(data => {
@@ -69,14 +59,16 @@ class Hours extends React.Component {
         state.messageInfo.header = 'Oh no! 😰'
         state.messageInfo.content = 'Something went wrong'
       }
-      console.log(state)
+      let entries = this.state.entries.filter(entry => entry.id != id)
+      state.entries = [...entries]
+
       return this.setState(state)
     })
     .catch(err => console.log(err.message))
   }
 
   handleDismiss(e) {
-    return this.setState({messageInfo: {visible: false}})
+    return this.setState({messageInfo: {visible: false, hidden: true}})
   }
 
   deleteRecord(id) {
