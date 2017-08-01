@@ -11,7 +11,6 @@ const Entry = ({start_time,end_time,current_day,id, handleDeleteClick}) => (
       <Card raised>
         <Card.Content>
           <Card.Header>
-            {/* <Icon name='ellipsis vertical' color='teal' onClick={} /> */}
             <ContextMenu  handleDeleteClick={handleDeleteClick} id={id} />
             {moment(current_day).format('MMMM Do')}
           </Card.Header>

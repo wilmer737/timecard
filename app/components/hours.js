@@ -33,7 +33,7 @@ class Hours extends React.Component {
   getEntries() {
     const today = moment()
     const firstDay = today.startOf('month').format('YYYY-MM-DD')
-    const lastDay = today.endOf('month').format('YYYY-MM-DD')
+    const lastDay = today.endOf('month').endOf('day').format('YYYY-MM-DD H:m:s')
 
     return fetch('/get-hours', {
       method: 'POST',

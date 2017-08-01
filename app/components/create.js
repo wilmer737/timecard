@@ -41,7 +41,6 @@ class Create extends React.Component {
 
     return (
       <div>
-        Create
         {submitted ? <Redirect to="/"/> : <EntryForm {...entry} submitForm={this.submitForm}/>}
       </div>
     )

@@ -79592,7 +79592,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var getHoursWorked = function getHoursWorked() {
   var today = (0, _moment2.default)();
   var firstDay = today.startOf('month').format('YYYY-MM-DD');
-  var lastDay = today.endOf('month').format('YYYY-MM-DD');
+  var lastDay = today.endOf('month').endOf('day').format('YYYY-MM-DD H:m:s');
 
   return fetch('/get-initial', {
     method: 'POST',
@@ -79919,7 +79919,7 @@ var Hours = function (_React$Component) {
     value: function getEntries() {
       var today = (0, _moment2.default)();
       var firstDay = today.startOf('month').format('YYYY-MM-DD');
-      var lastDay = today.endOf('month').format('YYYY-MM-DD');
+      var lastDay = today.endOf('month').endOf('day').format('YYYY-MM-DD H:m:s');
 
       return fetch('/get-hours', {
         method: 'POST',
@@ -80103,7 +80103,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var ContextMenu = function ContextMenu(_ref) {
   var handleDeleteClick = _ref.handleDeleteClick,
       id = _ref.id;
-  return _react2.default.createElement(_semanticUiReact.Popup, {
+  return _react2.default.createElement(_semanticUiReact.Popup, { hoverable: true,
     trigger: _react2.default.createElement(_semanticUiReact.Icon, { name: 'ellipsis vertical', color: 'teal' }),
     content: _react2.default.createElement(
       _semanticUiReact.Button,
@@ -80356,7 +80356,6 @@ var Create = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'Create',
         submitted ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' }) : _react2.default.createElement(_entryForm2.default, _extends({}, entry, { submitForm: this.submitForm }))
       );
     }
