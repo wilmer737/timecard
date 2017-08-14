@@ -45211,8 +45211,8 @@ var EntryForm = function (_React$Component) {
       var end = (0, _moment2.default)(this.state.endDate + ' ' + this.state.endTime);
       var begin = (0, _moment2.default)(this.state.startDate + ' ' + this.state.startTime);
 
-      if (end.isBefore(begin)) {
-        throw new Error('Can\'t be doing this man');
+      if (!(0, _moment2.default)(this.state.startDate).isSame(this.state.endDate) || end.isBefore(begin)) {
+        throw new Error('😡 Make sure both start date and end date are the same day');
       }
       return true;
     }

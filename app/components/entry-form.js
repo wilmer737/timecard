@@ -65,8 +65,8 @@ class EntryForm extends React.Component {
     const end = moment(`${this.state.endDate} ${this.state.endTime}`)
     const begin = moment(`${this.state.startDate} ${this.state.startTime}`)
 
-    if (end.isBefore(begin)) {
-       throw new Error('Can\'t be doing this man')
+    if (!moment(this.state.startDate).isSame(this.state.endDate)|| end.isBefore(begin)) {
+       throw new Error('😡 Make sure both start date and end date are the same day')
     }
     return true
   }
